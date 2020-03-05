@@ -42,3 +42,9 @@ and copying the dependency name and version over to requirements.txt as the fore
 ### Frontend
 #### Folder structure
 The application uses a variation of 'Atomic design' by Brad Frost. The difference between the original and this is that here we don't have templates, but have added a root category.
+
+## CLI arguments
+### Backend
+
+## Tasks:
+Find a way to automate py cli scripts ( py index.py mode=development => pyscripts run start-dev )
