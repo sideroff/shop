@@ -40,6 +40,9 @@ and copying the dependency name and version over to requirements.txt as the fore
 
 
 ### Frontend
+#### Imports / Exports
+Imports should be ordered: npm installed packages come first seperated by an empty line with the local files
+
 #### Folder structure
 The application uses a variation of 'Atomic design' by Brad Frost. The difference between the original and this is that here we don't have templates, but have added a root category.
 
