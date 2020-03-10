@@ -1,6 +1,7 @@
 from os import getpid
 import http.server
 import socketserver
+from functools import reduce
 
 HOST = '127.0.0.1'
 PORT = 8080
@@ -36,8 +37,9 @@ def serialize_response(http_code: int, headers: list = [], body: str = '') -> by
 
 
 def deserialize_request(request, max_headers_length=MAX_HEADERS_LENGTH, max_body_length=MAX_BODY_LENGTH):
-    data = request.recv(max_headers_length)
+    data = request.recv(max_headers_length)  # 8kb
 
+    index_where_headers_begin = data.find(b'\r\n')
     index_where_headers_end = data.find(b'\r\n\r\n')
 
     if index_where_headers_end == -1:
@@ -45,8 +47,20 @@ def deserialize_request(request, max_headers_length=MAX_HEADERS_LENGTH, max_body
         request.sendall(serialize_response(http_code=413))
         return False
 
+    header_bytes = data[index_where_headers_begin:index_where_headers_end]
+
+    headers = deserialize_headers(header_bytes)
     print(f'Headers found in first {max_headers_length} bytes, 200')
     request.sendall(serialize_response(http_code=200))
+
+
+def deserialize_headers(header_bytes: bytes):
+    try:
+        headers = {x: y for x, y in header_bytes.split()}
+
+        
+    except Exception as e:
+        raise ValueError('Invalid headers')
 
 
 class RequestHandler(socketserver.BaseRequestHandler):
