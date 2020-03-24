@@ -12,42 +12,36 @@ py -m venv .vevn
 Activate said virtual environment by running the appropriate version of the activate script. Your prompt should change to indicate that indeed the venv is active. You can also check by seeing if sys.prefix points to the venv python. Note that on Windows this does not work in the vscode terminal.
 
 ```
-cd ./backend/
-.venv/Scripts/activate.bat
+source ./backend/.venv/bin/activate
 ```
 
-To install all backend dependencies go to /backend and run:  
+To install the backend dependencies go to /backend and run:  
 `pip install -r requirement.txt`  
-Please note that this will install the dependencies globally.  
+
+For development purposes you will want to install the dev dependencies as well:
+`pip install -r dev.requirement.txt`  
+
+Please note that this will install the dependencies globally if you haven't setup a venv.
 
 When you want to add a new dependency, run:  
 `pip freeze`  
-and copy the specific dependency you need to the requirements.txt file.  
-
+and copy the specific dependency you need to any of the requirements files.  
 
 ### Frontend
 To install dependencies, go to /frontend and run:  
 `npm install`  
 
-## Keeping track of dependencies
-### Backend
-I recommend manually adding newly installed dependencies by running 
-`pip freeze`  
-and copying the dependency name and version over to requirements.txt as the forementioned command also returns dependencies that are required by the venv itself.
-
 ## Code style conventions
-### Backend
-
-
-### Frontend
 #### Imports / Exports
-Imports should be ordered: npm installed packages come first seperated by an empty line with the local files
+Imports should be ordered: npm / pip installed packages come first seperated by an empty line with any local files
 
-#### Folder structure
+#### Frontend Folder structure 
 The application uses a variation of 'Atomic design' by Brad Frost. The difference between the original and this is that here we don't have templates, but have added a root category.
 
-## CLI arguments
+## Development
 ### Backend
+You can use the following command to watch the py files and restart the server on any changes:
+`sudo watchmedo auto-restart --directory=./backend/src --pattern='*.py;*.txt' --recursive --kill-after 1 python3 ./backend/src/main.py`
 
 ## Tasks:
 Find a way to automate py cli scripts ( py index.py mode=development => pyscripts run start-dev )
