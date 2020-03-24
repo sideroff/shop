@@ -1,15 +1,18 @@
 import sys
+import os
+import socket
 
 from utils import get_dictionary_from_cli_args
 
-argv_dictionary = get_dictionary_from_cli_args(sys.argv)
+ARGV = get_dictionary_from_cli_args(sys.argv)
 
-config = {
-    'name': __name__,
-    'mode': argv_dictionary['named'].get('mode', 'development'),
-    'argv': argv_dictionary,
-    'server': {
-        'methods': ['GET', 'POST', 'PUT', 'PATCH', "DELETE"],
-        'api_methods': ['GET', 'POST']
-    }
-}
+DEVELOPMENT = 'development'
+
+NAME = __name__
+
+MODE = os.getenv('MODE', DEVELOPMENT)
+
+# SERVER config
+HOST = os.getenv('HOST', socket.gethostbyname(socket.gethostname()))
+PORT = os.getenv('PORT', 8080)
+
